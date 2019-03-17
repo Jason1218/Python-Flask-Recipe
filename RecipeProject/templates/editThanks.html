@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Thanks for editing a recipe. Here is the updated info that you sent</h1>
+<ul>
+	<li>Name: {{session['name']}}</li>
+	<li>Ingredients: {{session['ingredients']}}</li>
+	<li>Instructions: {{session['instructions']}}</li>
+	<li>Serving Size: {{session['servingSize']}}</li>
+	<li>Category: {{session['category']}}</li>
+	<li>Notes: {{session['notes']}}</li>
+	<li>Date Added: {{session['dateAdded']}}</li>
+	<li>Date Modified: {{session['dateModified']}}</li>
+</ul>
+
+{% endblock %}
