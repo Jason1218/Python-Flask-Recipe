@@ -1,7 +1,22 @@
+<!-- This page adds a new recipe -->
+
 {% extends "layout.html" %}
 {% block content %}
    <div class="home">
      <h1>Add a recipe!</h1>
      <p>You can add recipes here</p>
+     <form method = "POST">
+     	{{form.hidden_tag()}}<br>
+     	{{form.name.label}}{{form.name()}}<br>
+     	{{form.ingredients.label}}{{form.ingredients()}}<br>
+     	{{form.instructions.label}}{{form.instructions()}}<br>
+     	{{form.servingSize.label}}{{form.servingSize()}}<br>
+     	{{form.category.label}}{{form.category()}}<br>
+     	{{form.notes.label}}{{form.notes()}}<br>
+     	{{form.dateAdded.label}}{{form.dateAdded()}}<br>
+     	{{form.dateModified.label}}{{form.dateModified()}}<br>
+     	{{form.submit()}}
+
+     </form>
    </div>
 {% endblock %}
