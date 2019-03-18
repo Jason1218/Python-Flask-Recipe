@@ -64,6 +64,16 @@ class InfoForm(FlaskForm):
     dateAdded = StringField("Date added")
     dateModified = StringField("Date modified")
     submit = SubmitField('Submit')
+    recipe = []
+    recipe.append(name)
+    recipe.append(ingredients)
+    recipe.append(instructions)
+    recipe.append(servingSize)
+    recipe.append(category)
+    recipe.append(notes)
+    recipe.append(dateAdded)
+    recipe.append(dateModified)
+    recipes.append(recipe)
 
 @app.route('/delete-recipe', methods=['GET','POST'])
 def delRecipe():
@@ -81,6 +91,11 @@ def delThanks():
 @app.route('/delete-recipe')
 def deleteRecipeHTML():
     return render_template('delete.html')
+
+@app.route('/list-recipes', methods = ['GET'])
+def listRecipesHTML():
+    return jsonify({'recipes': recipes})
+
 
 
 @app.route('/edit-recipe', methods = ['GET', 'POST'])
@@ -140,41 +155,6 @@ def addThanks():
 def test():
     return render_template('layout.html')
     
-## returns all current recipes
-@app.route('/recipes', methods=['GET'])
-def returnAllRecipes():
-    return jsonify({'recipes': recipes})
-
-
-
-
-
-
-## returns a recipe
-@app.route('/recipes/<string:recipe>', methods=['GET'])
-def returnOneRecipe(recipe):
-    rec = [recip for recip in recipes if recip['name']==recipe]
-    return jsonify({'recipe': rec[0]})
-
-## adds a new recipe name
-@app.route('/recipes', methods=['POST'])
-def addRecipe():
-    recipe = {
-    'name': request.get_json(force=True).get('name')
-    }
-
-    recipes.append(recipe)
-    return jsonify({'name': recipes})
-
-## edit the name of a recipe
-
-
-## Delete a recipe
-@app.route('/recipes/<string:recipe>', methods = ['DELETE'])
-def removeRecipe(recipe):
-    rec = [recip for recip in recipes if recip['name']==recipe]
-    recipes.remove(rec[0])
-    return render_template('delete.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
