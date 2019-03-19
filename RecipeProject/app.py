@@ -8,40 +8,18 @@ from wtforms import StringField,SubmitField,BooleanField,DateTimeField,TextField
 from wtforms.validators import DataRequired
 
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 api = Api(app)
 app.secret_key = 'jason'
 login = LoginManager(app)
 app.config['SECRET_KEY']== 'jason'
-
-
-
-
-
 recipes = []
-class RecipeNames(Resource):
-    def get(self, name):
-        for recipe in recipes:
-            if recipe['name'] ==name:
-                return recipe
-        return {'name': None}
 
-    def post(self, name):
-        recipe = {'name': name}
-        recipes.append(recipe)
-        return recipe
-
-    def delete(self,name):
-        for ind,pup in enumerate(recipes):
-            if pup['name']==name:
-                deleted_recipe = recipes.pop(ind)
-                return {'note': 'delete success'}
-
+fields = ['Name', 'Ingredients', 'Instructions', 'Serving Size', 'Category', 'Notes', 'Date Added', 'Date Modified']
 class DeleteForm(FlaskForm):
     name = StringField("What recipe would you like to delete?")
     submit = SubmitField('Submit')
+
 
 class EditForm(FlaskForm):
     name = StringField("What is the name of the recipe?")
@@ -65,27 +43,22 @@ class InfoForm(FlaskForm):
     dateModified = StringField("Date modified")
     submit = SubmitField('Submit')
     recipe = []
-    recipe.append(name)
-    recipe.append(ingredients)
-    recipe.append(instructions)
-    recipe.append(servingSize)
-    recipe.append(category)
-    recipe.append(notes)
-    recipe.append(dateAdded)
-    recipe.append(dateModified)
-    recipes.append(recipe)
-
+    
 @app.route('/delete-recipe', methods=['GET','POST'])
 def delRecipe():
     form = DeleteForm()
     if form.validate_on_submit():
         session['name'] = form.name.data
+        for i in recipes:
+            if form.name.data == i[0]:
+                recipes.remove(i)
         return redirect(url_for('delThanks'))        
     return render_template('delete.html', form = form)
 
 @app.route('/del-recipe/thanks')
 def delThanks():
-    return render_template('deleteThanks.html')
+    
+    return render_template('deleteThanks.html', recipes = recipes)
 
 
 @app.route('/delete-recipe')
@@ -94,13 +67,16 @@ def deleteRecipeHTML():
 
 @app.route('/list-recipes', methods = ['GET'])
 def listRecipesHTML():
-    return jsonify({'recipes': recipes})
+    form = InfoForm
+    return render_template('listRecipes.html', recipes = recipes, fields = fields)
 
 
 
 @app.route('/edit-recipe', methods = ['GET', 'POST'])
 def editRecipe():
     form = EditForm()
+    recipe = []
+
     if form.validate_on_submit():
         session['name'] = form.name.data
         session['ingredients'] = form.ingredients.data
@@ -109,17 +85,31 @@ def editRecipe():
         session['category'] = form.category.data
         session['notes'] = form.notes.data
         session['dateAdded'] = form.dateAdded.data
-        session['dateModified'] = form.dateAdded.data
+        session['dateModified'] = form.dateModified.data
+        recipe.append(form.name.data)
+        recipe.append(form.ingredients.data)
+        recipe.append(form.instructions.data)
+        recipe.append(form.servingSize.data)
+        recipe.append(form.category.data)
+        recipe.append(form.notes.data)
+        recipe.append(form.dateAdded.data)
+        recipe.append(form.dateModified.data)
+        recipes.append(recipe)
+        for i in recipes:
+            if form.name.data == i[0]:
+                recipes.remove(i)
+                break
+
         return redirect(url_for('editThanks'))
-    return render_template('edit.html', form = form)
+    return render_template('edit.html', form = form, recipes = recipes)
 
 @app.route('/edit-recipe/thanks')
 def editThanks():
-    return render_template('editThanks.html')
+    return render_template('editThanks.html', recipes = recipes)
 
 @app.route('/edit-recipe')
 def editRecipeHTML():
-    return render_template('edit.html')
+    return render_template('edit.html', recipes = recipes)
 
 
 
@@ -137,8 +127,16 @@ def update():
         session['category'] = form.category.data
         session['notes'] = form.notes.data
         session['dateAdded'] = form.dateAdded.data
-        session['dateModified'] = form.dateAdded.data
-
+        session['dateModified'] = form.dateModified.data
+        recipe.append(form.name.data)
+        recipe.append(form.ingredients.data)
+        recipe.append(form.instructions.data)
+        recipe.append(form.servingSize.data)
+        recipe.append(form.category.data)
+        recipe.append(form.notes.data)
+        recipe.append(form.dateAdded.data)
+        recipe.append(form.dateModified.data)
+        recipes.append(recipe)
         return redirect(url_for('addThanks'))
     return render_template('add.html', form = form)
 
