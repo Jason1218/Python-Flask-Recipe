@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+
 <h1>Thanks for editing a recipe. Here is the updated info that you sent</h1>
 <ul>
 	<li>Name: {{session['name']}}</li>
@@ -12,5 +13,4 @@
 	<li>Date Modified: {{session['dateModified']}}</li>
 </ul>
 
- 
 {% endblock %}

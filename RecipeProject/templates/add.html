@@ -2,6 +2,7 @@
 
 {% extends "layout.html" %}
 {% block content %}
+
    <div class="home">
      <h1>Add a recipe!</h1>
      <p>You can add recipes here</p>
@@ -16,7 +17,7 @@
      	{{form.dateAdded.label}}{{form.dateAdded()}}<br>
      	{{form.dateModified.label}}{{form.dateModified()}}<br>
      	{{form.submit()}}
-
      </form>
    </div>
+   
 {% endblock %}

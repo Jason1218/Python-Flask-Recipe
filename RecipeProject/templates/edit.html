@@ -1,13 +1,10 @@
 <!-- This page handles the deletion of a recipe -->
 {% extends "layout.html" %}
 {% block content %}
+
    <div class="home">
      <h1>Edit a recipe!</h1>
      <p>Choose a recipe to edit</p>
-
-   
-
-
      <form method = "POST">
      	{{form.hidden_tag()}}<br>
      	{{form.name.label}}{{form.name()}}<br>
@@ -20,7 +17,6 @@
      	{{form.dateModified.label}}{{form.dateModified()}}<br>
      	{{form.submit()}}
      </form>
-    
-
    </div>
+   
 {% endblock %}

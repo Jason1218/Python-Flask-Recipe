@@ -1,18 +1,15 @@
 <!-- This page handles the deletion of a recipe -->
 {% extends "layout.html" %}
 {% block content %}
+
    <div class="home">
      <h1>Delete a recipe!</h1>
      <p>Choose a recipe to delete</p>
-
      <form method = "POST">
-
      	{{form.hidden_tag()}}<br>
      	{{form.name.label}}{{form.name()}}<br>
      	{{form.submit()}}
-     	
      </form>
    </div>
-
    
 {% endblock %}

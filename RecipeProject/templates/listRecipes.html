@@ -1,18 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
-
-
 {% for recipe in recipes %}
-  
   {% for i in range(recipe|length) %}
     <td>{{fields[i]}}: {{recipe[i]}}</td><br>
-    {% endfor %}
-
-  <br>
+    {% endfor %} <br>
 {% endfor %}
-
-
 
 {% endblock %}
